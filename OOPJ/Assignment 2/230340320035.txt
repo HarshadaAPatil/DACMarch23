@@ -1,0 +1,521 @@
+05-04-2023
+-----------------------------------------
+
+In first 45 min I reviewed all the topics that Sandeep Sir has taught today.
+Arrays, Array initialization, classes used for Array operations--> java.util.Arrays, java.lang.reflect.Array, org.apache.common.lang3.ArrayUtils, 
+4 types of loop used to print array elements (while,do-while,for,foreach)
+Exception:NegativeArraySizeException, ArrayIndexOutOfBoundException
+Multidimensional Array, Multidimensional array initialization.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Q7.
+package org.cdac;
+/*			
+		The program should have the following fields:
+			a. vehicleType: A string field to store the type of vehicle.
+			b. numAxles: An integer field to store the number of axles.
+			c. distanceTraveled: A double field to store the distance traveled.
+			d. tollFee: A double field to store the calculated toll fee.
+			e. totalAmountDue: A double field to store the total amount due. 
+			
+			You are required to write a Java program to implement a Toll Booth Bill Generator. 
+			The program should be able to calculate the toll fee for each 
+			vehicle based on the number of axles and the distance travelled. The program should also be able to generate a bill for each vehicle.
+			
+ * */
+
+public class Toll {
+
+	private String vehicleType;
+	private int numberOfAxles;
+	private double totalAnountDue;
+	private double distanceTravelled;
+	private double tollFee;
+	
+	Toll(){
+		//Parameterless Constructor...
+	}
+	
+	public Toll(String vehicleType, int numberOfAxles, double totalAnountDue, double distanceTravelled, double tollFee) {
+		super();
+		this.vehicleType = vehicleType;
+		this.numberOfAxles = numberOfAxles;
+		this.totalAnountDue = totalAnountDue;
+		this.distanceTravelled = distanceTravelled;
+		this.tollFee = tollFee;
+	}
+	public String getVehicleType() {
+		return vehicleType;
+	}
+	public void setVehicleType(String vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+	public int getNumberOfAxles() {
+		return numberOfAxles;
+	}
+	public void setNumberOfAxles(int numberOfAxles) {
+		this.numberOfAxles = numberOfAxles;
+	}
+	public double getTotalAnountDue() {
+		return totalAnountDue;
+	}
+	public void setTotalAnountDue(double totalAnountDue) {
+		this.totalAnountDue = totalAnountDue;
+	}
+	public double getDistanceTravelled() {
+		return distanceTravelled;
+	}
+	public void setDistanceTravelled(double distanceTravelled) {
+		this.distanceTravelled = distanceTravelled;
+	}
+	public double getTollFee() {
+		return tollFee;
+	}
+	public void setTollFee(double tollFee) {
+		this.tollFee = tollFee;
+	}
+	@Override
+	public String toString() {
+		return "Toll [vehicleType=" + vehicleType + ", numberOfAxles=" + numberOfAxles + ", totalAnountDue="
+				+ totalAnountDue + ", distanceTravelled=" + distanceTravelled + ", tollFee=" + tollFee + "]";
+	}
+	
+	
+	
+
+}
+
+
+package org.cdac;
+/*
+ * 
+ * */
+public class TollBoothBillGenerator {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		TollBoothOperations tollOp=new TollBoothOperations();
+		int ch=0;
+		while((ch=tollOp.showMenu())!=0) {
+			switch(ch) {
+			case 1: tollOp.enterVehicleType();
+				break;
+			case 2: tollOp.enterAxles();
+				break;
+			case 3: tollOp.enterDistance();
+				break;
+			case 4: tollOp.calculateTollFee();
+				break;
+			case 5: tollOp.generateBill();
+				break;
+			default:System.out.println("Enter valid choice...");
+				
+			}
+		}
+	}
+
+}
+
+
+package org.cdac;
+/*
+ * The program should be able to calculate the toll fee for each vehicle based on the following criteria:
+			a. Cars, vans, and buses pay a base rate of $0.25 per mile for each axle.
+			b. Trucks pay a base rate of $0.50 per mile for each axle.
+	The program should be able to generate a bill for each vehicle based on the following criteria:
+			a. The bill should include the vehicle type, number of axles, distance travelled, toll fee, and total amount due.
+			b. The total amount due should include a $2.00 processing fee.
+			c. The toll fee calculation and total amount due should not be accessible outside of the class.
+			
+	The program should have the following methods:
+			a. calculateTollFee(): A method to calculate the toll fee for a given vehicle based on the number of axles and distance travelled.
+			b. generateBill(): A method to generate a bill for a given vehicle based on the toll fee and total amount due.
+			c. showMenu(): A method to show the menu options for the user to input the vehicle information.
+			
+	
+	The program should show the following menu options:
+			a. Enter vehicle type (car, van, bus, or truck)
+			b. Enter number of axles
+			c. Enter distance travelled
+			d. Calculate toll fee
+			e. Generate bill
+			f. Exit
+ * */
+
+import java.util.Scanner;
+public class TollBoothOperations {
+
+	private Toll tollInstance =new Toll();
+	private static Scanner sc=new Scanner(System.in);
+	
+	//Enter vehicle type (car, van, bus, or truck)
+	void enterVehicleType() {
+		System.out.print("Enter vehicle type (car, van, bus, or truck) : ");
+		sc.nextLine();
+		tollInstance.setVehicleType(sc.nextLine());
+	}
+	
+	//Enter number of axles
+	void enterAxles() {
+		System.out.print("Enter number of axles ");
+		tollInstance.setNumberOfAxles(sc.nextInt());
+	}
+	
+	//Enter distance travelled
+	void enterDistance() {
+		System.out.print("Enter distance travelled : ");
+		tollInstance.setDistanceTravelled(sc.nextDouble());;
+	}
+	
+	//calculateTollFee
+	//Cars, vans, and buses pay a base rate of $0.25 per mile for each axle.
+//	b. Trucks pay a base rate of $0.50 per mile for each axle.
+	void calculateTollFee() {
+		if(tollInstance.getVehicleType().equals("truck")) {
+			tollInstance.setTollFee(0.5);
+		}
+		else
+			tollInstance.setTollFee(0.25);
+		System.out.println("Toll fee for your vehicle per mile is : "+tollInstance.getTollFee());
+	}
+	
+	//A method to generate a bill for a given vehicle based on the toll fee and total amount due.
+	/*		a. The bill should include the vehicle type, number of axles, distance travelled, toll fee, and total amount due.
+			b. The total amount due should include a $2.00 processing fee.
+			c. The toll fee calculation and total amount due should not be accessible outside of the class.
+	*/
+	void generateBill() {
+		tollInstance.setTotalAnountDue(2);
+		double totalBill=(tollInstance.getDistanceTravelled() * tollInstance.getTollFee())+2;
+		System.out.println("The total bill generated is : "+totalBill);		
+	}
+	
+	int showMenu() {
+		
+		System.out.println("0.Exit");
+		System.out.println("1.Enter vehicle type (Car, Van, Bus, or Truck) ");
+		System.out.println("2.Enter number of axles. ");
+		System.out.println("3.Enter distance travelled.");
+		System.out.println("4.Calculate toll fee. ");
+		System.out.println("5.Generate bill.");
+		System.out.print("Enter your choice : ");
+		return sc.nextInt();
+	}
+	
+}
+
+=====================================================================================================================
+
+Q8.
+
+package org.cdac;
+
+public class RationalNumber {
+
+	private int num1,num2;
+	public RationalNumber(){
+		
+	}
+	public RationalNumber(int num1, int num2) {
+		super();
+		this.num1 = num1;
+		this.num2 = num2;
+	}
+
+	public int getNum1() {
+		return num1;
+	}
+
+	public void setNum1(int num1) {
+		this.num1 = num1;
+	}
+
+	public int getNum2() {
+		return num2;
+	}
+
+	public void setNum2(int num2) {
+		this.num2 = num2;
+	}
+	
+}
+
+
+package org.cdac;
+
+public class RationalNumberCalculator {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		RationalNumberOperation rationalNum=new RationalNumberOperation();
+		int ch;
+		while((ch=rationalNum.menuList())!=0) {
+			switch(ch) {
+			case 1: rationalNum.acceptNum();
+				break;
+			case 2: System.out.println("Addition is : "+rationalNum.addition());
+				break;
+			case 3: 
+				System.out.println("Substraction is : "+rationalNum.substraction());
+				break;
+			case 4: System.out.println("Multiplication is : "+rationalNum.multiplication());
+				break;
+			case 5: System.out.println("Division is : "+rationalNum.division());
+				break;
+			default : System.out.println("Please enter valid choice...");
+			}
+		}
+
+	}
+
+}
+
+
+package org.cdac;
+
+/**
+	 * You are required to write a Java program to perform arithmetic operations on rational numbers. Rational numbers are numbers that can be expressed as a 
+	 * fraction of two integers (i.e., numerator and denominator). The program should take the following inputs from the user:
+	Two rational numbers (i.e., two pairs of integers representing the numerator and 
+	denominator of each number)
+	The program should then perform the arithmetic operation on the two rational 
+	numbers and output the result in the form of a reduced fraction (i.e., the numerator 
+	and denominator should be as small as possible).
+	Example Input
+	Enter the first rational number:
+	Numerator: 2
+	Denominator: 3
+	Enter the second rational number:
+	Numerator: 1
+	Denominator: 6
+	Enter the arithmetic operation (+, -, *, /): 
+ */
+import java.util.*;
+
+public class RationalNumberOperation {
+	private static Scanner sc=new Scanner(System.in);
+	private RationalNumber ratNum1=new RationalNumber();
+	private RationalNumber ratNum2=new RationalNumber();
+
+	
+	static int menuList() {
+		System.out.println("0.Exit");
+		System.out.println("1.Accept two pairs of integer representing the numerator and denominator of each number.");
+		System.out.println("2.Addition");
+		System.out.println("3.Substraction");
+		System.out.println("4.Multiplication");
+		System.out.println("5.Division");
+		System.out.println("Enter your choise");
+		return sc.nextInt();
+	}
+
+	public void acceptNum() {
+		// TODO Auto-generated method stub
+		System.out.println("Enter the first rational number: ");
+		System.out.print("Numerator : ");
+		ratNum1.setNum1(sc.nextInt());
+		System.out.print("Denominator :");
+		ratNum1.setNum2(sc.nextInt());
+		System.out.println("Enter the second rational number: ");
+		System.out.print("Numerator : ");
+		ratNum2.setNum1(sc.nextInt());
+		System.out.print("Denominator :");
+		ratNum2.setNum2(sc.nextInt());
+		
+	}
+	
+	public double addition() {
+		// TODO Auto-generated method stub
+		if(ratNum1.getNum2()==ratNum2.getNum2()) {
+			return ((ratNum1.getNum1()+ratNum2.getNum1())/ratNum1.getNum2());
+		}
+		else {
+			return ((ratNum1.getNum1()*ratNum2.getNum2()+ratNum1.getNum2()*ratNum2.getNum1())/(ratNum1.getNum2()*ratNum2.getNum2()));
+		}
+	}
+
+	public double substraction() {
+		// TODO Auto-generated method stub
+		if(ratNum1.getNum2()==ratNum2.getNum2()) {
+			return ((ratNum1.getNum1()-ratNum2.getNum1())/ratNum1.getNum2());
+		}
+		else {
+			return ((ratNum1.getNum1()*ratNum2.getNum2()-ratNum1.getNum2()*ratNum2.getNum1())/(ratNum1.getNum2()*ratNum2.getNum2()));
+		}
+	}
+
+	public double multiplication() {
+		// TODO Auto-generated method stub
+		return ((ratNum1.getNum1()*ratNum2.getNum1())/(ratNum1.getNum2()*ratNum2.getNum2()));
+	}
+
+	public double division() {
+		// TODO Auto-generated method stub
+		return ((ratNum1.getNum1()*ratNum2.getNum2())/(ratNum1.getNum2()*ratNum2.getNum1()));
+	}
+
+}
+=====================================================================================================================
+
+Q9.
+
+package org.cdac;
+/*
+ * 	The Date class should have the following methods:
+		a. isValid(): A method to check if the date is valid or not. A date is considered valid if it is a valid date of the Gregorian 
+		calendar, and has a day, month, and year that are within a reasonable range.
+		b. getDayOfWeek(): A method to return the day of the week for the given date, where Sunday is represented by 0, Monday by 1, and so on.
+		c. isLeapYear(): A method to check if the year of the given date is a leap year or not.
+		d. getNextDay(): A method to return the date of the next day.
+		e. getPreviousDay(): A method to return the date of the previous day.
+	Example Usage
+	Date date = new Date(31, 12, 2022);
+	System.out.println(date.isValid()); // true
+	System.out.println(date.getDayOfWeek()); // 6 (Saturday)
+	System.out.println(date.isLeapYear()); // false
+	Date nextDay = date.getNextDay();
+	System.out.println(nextDay); // 01-01-2023
+	Date previousDay = date.getPreviousDay();
+	System.out.println(previousDay); // 30-12-202*/
+public class Date {
+	private int day;
+	private int month;
+	private int year;
+	
+	public Date() {
+		
+	}
+	public Date(int day, int month, int year) {
+		super();
+		this.day = day;
+		this.month = month;
+		this.year = year;
+	}
+	public int getDay() {
+		return day;
+	}
+	public void setDay(int day) {
+		this.day = day;
+	}
+	public int getMonth() {
+		return month;
+	}
+	public void setMonth(int month) {
+		this.month = month;
+	}
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
+	
+	
+
+}
+
+package org.cdac;
+
+public class DateCheck {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DateOperation dtOp=new DateOperation();
+		int ch;
+		dtOp.acceptDate();
+		while((ch=dtOp.menuList())!=0) {
+			switch(ch) {
+			case 1: System.out.println(dtOp.isValid());
+				break;
+			case 2: dtOp.getDayOfWeek();
+				break;
+			case 3: System.out.println(dtOp.isLeapYear());
+				break;
+			case 4: dtOp.getNextDay();
+				break;
+			case 5: dtOp.getPreviousDay();
+				break;
+			default:System.out.println("Invalid choice ");
+			}
+		}
+
+	}
+
+}
+
+package org.cdac;
+import java.time.LocalDate;
+import java.util.*;
+public class DateOperation {
+
+	Date dt=new Date();
+	static Scanner sc=new Scanner(System.in);
+	void acceptDate() {
+		System.out.println("Enter day : ");
+		dt.setDay(sc.nextInt());
+		System.out.println("Enter month : ");
+		dt.setMonth(sc.nextInt());
+		System.out.println("Enter year : ");
+		dt.setYear(sc.nextInt());
+	}
+	
+	boolean isValid() {
+		if(dt.getMonth()==8 || dt.getMonth()==1 || dt.getMonth()==3 || dt.getMonth()==5 || dt.getMonth()==7 || 
+				dt.getMonth()==10 || dt.getMonth()==12) {
+			if(dt.getDay()<=31 && dt.getDay()>=1) {
+				return true;
+			}
+			else 
+				return false;
+		}
+		else if(dt.getMonth()==02) {
+			if (((dt.getYear() % 4 == 0) && (dt.getYear() % 100 != 0)) || (dt.getYear() % 400 == 0)) {
+		           if(dt.getDay()<=29 && dt.getDay()>=1) {
+		        	   return true;
+		           }
+			}
+		    else if(dt.getDay()<=28 && dt.getDay()>=1) {
+		        	   return true;
+		           }
+		        else {
+		           return false;
+		        }
+		}
+		
+		else
+			if(dt.getDay()<=30 && dt.getDay()>=1)
+				return true;
+		return false;
+	}
+	
+	void getDayOfWeek() {
+		LocalDate localdt = LocalDate.of(dt.getYear(),dt.getMonth() ,dt.getDay());
+        System.out.println(localdt.getDayOfWeek());
+	}
+	
+	boolean isLeapYear() {
+		return (((dt.getYear() % 4 == 0) && (dt.getYear() % 100 != 0)) || (dt.getYear() % 400 == 0));
+	}
+	
+	void getNextDay() {
+		LocalDate localdt = LocalDate.of(dt.getYear(),dt.getMonth() ,dt.getDay());
+        System.out.println("Next Date : "+localdt.plusDays(1));
+	}
+	
+	void getPreviousDay() {
+		LocalDate localdt = LocalDate.of(dt.getYear(),dt.getMonth() ,dt.getDay());
+        System.out.println("Previous Date : "+localdt.minusDays(1));
+	}
+	static int menuList() {
+		System.out.println("0.Exit");
+		System.out.println("1.isValid()");
+		System.out.println("2.getDayOfWeek()");
+		System.out.println("3.isLeapYear()");
+		System.out.println("4.getNextDay()");
+		System.out.println("5.getPreviousDay()");
+		System.out.println("Enter your choice : ");
+		return sc.nextInt();
+	}
+}
